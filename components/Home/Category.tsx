@@ -1,4 +1,11 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import Colors from "@/constants/Colors";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -25,7 +32,7 @@ const petFace = [
     face: "https://img.freepik.com/premium-vector/cartoon-drawing-bird-with-eyes-blue-shirt_1128391-32979.jpg?ga=GA1.1.76980944.1725532245&semt=ais_hybrid",
   },
 ];
-const Category = () => {
+const Category = ({ category }) => {
   const [selectCategory, setSelectCategory] = useState(1);
   return (
     <View>
@@ -38,11 +45,17 @@ const Category = () => {
         data={petFace}
         numColumns={4}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={()=>setSelectCategory(item.id)} style={{ flex: 1 }}>
+          <TouchableOpacity
+            onPress={() => {
+              setSelectCategory(item.id);
+              category(item.name)
+            }}
+            style={{ flex: 1 }} 
+          >
             <View
               style={[
                 styles.container,
-                selectCategory == item.id && styles.activeCat,
+                selectCategory == item.id && styles.activeCat
               ]}
             >
               <Image
